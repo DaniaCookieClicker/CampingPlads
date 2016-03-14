@@ -27,7 +27,7 @@ namespace CampingPlads
         {
             listBox1.Items.Add(textBox1.Text);
             Database database = new Database();
-            database.Connection();
+           // database.Connection();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
