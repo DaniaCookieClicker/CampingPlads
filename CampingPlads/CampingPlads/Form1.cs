@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace CampingPlads
 {
@@ -25,6 +26,8 @@ namespace CampingPlads
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Add(textBox1.Text);
+            Database database = new Database();
+            database.Connection();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
