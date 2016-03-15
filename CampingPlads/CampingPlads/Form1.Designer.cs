@@ -41,7 +41,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(44, 35);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(76, 20);
             this.textBox1.TabIndex = 0;
@@ -50,7 +50,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(124, 35);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(56, 19);
             this.button1.TabIndex = 1;
@@ -62,7 +62,7 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(482, 119);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(2);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(91, 69);
             this.listBox1.TabIndex = 2;
@@ -72,7 +72,7 @@
             // 
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(466, 119);
-            this.listBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBox2.Margin = new System.Windows.Forms.Padding(2);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(91, 69);
             this.listBox2.TabIndex = 3;
@@ -128,7 +128,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
