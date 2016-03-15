@@ -33,7 +33,6 @@ namespace CampingPlads
         public void CreateTable()
         {
 
-            // conn.Open();
             String sql = "create table Budget (indkomst integer, udgift integer,overskud integer,teltPris integer,campingvognPris integer);";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
