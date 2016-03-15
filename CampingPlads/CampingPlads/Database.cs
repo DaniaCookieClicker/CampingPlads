@@ -17,12 +17,13 @@ namespace CampingPlads
 
         public void Connection()
         {
-            //string curFile = @"c:\temp\CampingPlads.db";
-            //if (!File.Exists(curFile))
-            //{
+            string curFile = @"CampingPlads.db";
+            if (!File.Exists(curFile))
+            {
 
-            //}
-            //SQLiteConnection.CreateFile("CampingPlads.db");
+            SQLiteConnection.CreateFile("CampingPlads.db");
+            }
+
 
             conn.Open();
 
