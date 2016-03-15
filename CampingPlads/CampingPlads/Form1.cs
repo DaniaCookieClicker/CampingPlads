@@ -13,9 +13,16 @@ namespace CampingPlads
 {
     public partial class Form1 : Form
     {
+            Database database = new Database();
         public Form1()
         {
             InitializeComponent();
+
+            //database.Connection();
+            //database.CreateTable();
+            //database.regnskab();
+            listBox2.Hide();
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -26,13 +33,20 @@ namespace CampingPlads
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Add(textBox1.Text);
-            Database database = new Database();
-           // database.Connection();
+
+            //database.InsertCampingArea(Convert.ToInt32(textBox1.Text));
+            listBox1.Hide();
+            listBox2.Show();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //and then stuff
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
         }
     }
 }
