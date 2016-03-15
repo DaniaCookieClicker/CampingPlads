@@ -96,7 +96,12 @@ namespace CampingPlads
         {
             String sql = "select teltPris, campingvognPris from Budget";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
-            var sovs = command.ExecuteNonQuery();
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string sovs = "Teltpris: " + reader["teltPris"] + " Campingvognpris: " + reader["campingvognPris"];
+            }
+
         }
         public void SætPris(int teltPris, int campingvognPris)
         {
