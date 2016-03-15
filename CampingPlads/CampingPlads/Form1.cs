@@ -18,9 +18,10 @@ namespace CampingPlads
         {
             InitializeComponent();
 
-            //database.Connection();
+            database.Connection();
             //database.CreateTable();
-            //database.regnskab();
+            //database.Regnskab();
+            database.TjekPris();
             listBox2.Hide();
 
         }
@@ -47,6 +48,26 @@ namespace CampingPlads
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            database.Rejsende();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            database.SætPris(Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
