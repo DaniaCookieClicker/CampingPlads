@@ -13,6 +13,7 @@ namespace CampingPlads
         static String connStr = "Data Source=CampingPlads.db;Version=3";
         SQLiteConnection conn = new SQLiteConnection(connStr);
         private int lokalTeltPris;
+        private int lokalCampingvognPris;
 
         public void Connection()
         {
@@ -94,12 +95,16 @@ namespace CampingPlads
         }
         public void TjekPris()
         {
-            String sql = "select teltPris, campingvognPris from Budget";
+            String sql = "select teltPris,campingvognPris from Budget";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             SQLiteDataReader reader = command.ExecuteReader();
+           
             while (reader.Read())
             {
-                string sovs = "Teltpris: " + reader["teltPris"] + " Campingvognpris: " + reader["campingvognPris"];
+                lokalTeltPris = Convert.ToInt32(reader["teltPris"]);
+               lokalCampingvognPris= Convert.ToInt32(reader["campingvognpris"]);
+
+
             }
 
         }
