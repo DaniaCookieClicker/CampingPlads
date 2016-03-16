@@ -19,8 +19,8 @@ namespace CampingPlads
             InitializeComponent();
 
             database.Connection();
-            //database.CreateTable();
-            //database.Regnskab();
+           // database.CreateTable();
+          //  database.Regnskab();
             database.TjekPris();
             button2.Hide();
             progressBar1.Maximum = 10;

@@ -80,14 +80,14 @@ namespace CampingPlads
             //(id integer primary key, nationalitet string , penge integer, campingvogn boolean, tolerance integer)
             string[] nationalitet = new string[] { "Dansker", "Svensker", "Nordmand", "Tysker", "Finner" };
             Random rd = new Random();
-            int i = rd.Next(0, 6);
+            int i = rd.Next(0, 5);
             int penge = rd.Next(500, 3000);
             int campingvogn = rd.Next(0, 2);
             int tolerence = rd.Next(500, 1000);
 
             for (int j = 0; j < 20; j++)
             {
-                String sql = "insert into Rejsende values(null, " + nationalitet[i] + "," + penge + "," + campingvogn + "," + tolerence + ");";
+                String sql = "insert into Rejsende values(null, "+"'" + nationalitet[i]+"'" +" ," + penge + "," + campingvogn + "," + tolerence + ");";
                 SQLiteCommand command = new SQLiteCommand(sql, conn);
                 command.ExecuteNonQuery();
             }
