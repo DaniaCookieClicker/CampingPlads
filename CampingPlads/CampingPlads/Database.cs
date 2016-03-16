@@ -14,8 +14,6 @@ namespace CampingPlads
         SQLiteConnection conn = new SQLiteConnection(connStr);
         private int lokalTeltPris;
         private int lokalCampingvognPris;
-        private int besøgendeID;
-        private int besøgendePenge;
 
         public void Connection()
         {
@@ -138,14 +136,13 @@ namespace CampingPlads
             sql = "select id,penge from Rejsende;";
             command = new SQLiteCommand(sql, conn);
             reader = command.ExecuteReader();
-            int[] besøgende = new int[h] { };
             while (reader.Read())
             {
                 int i;
                 int j;
                 i = Convert.ToInt32(reader["id"]);
                 j = Convert.ToInt32(reader["penge"]);
-                besøgende[i] = j;
+
 
             }
 
