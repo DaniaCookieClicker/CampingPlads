@@ -51,6 +51,7 @@ namespace CampingPlads
         private void button2_Click(object sender, EventArgs e)
         {
             database.Rejsende();
+            database.Indkomst();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

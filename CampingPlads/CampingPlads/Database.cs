@@ -14,6 +14,8 @@ namespace CampingPlads
         SQLiteConnection conn = new SQLiteConnection(connStr);
         private int lokalTeltPris;
         private int lokalCampingvognPris;
+        private int besøgendeID;
+        private int besøgendePenge;
 
         public void Connection()
         {
@@ -21,7 +23,7 @@ namespace CampingPlads
             if (!File.Exists(curFile))
             {
 
-            SQLiteConnection.CreateFile("CampingPlads.db");
+                SQLiteConnection.CreateFile("CampingPlads.db");
             }
 
 
@@ -80,16 +82,30 @@ namespace CampingPlads
             //(id integer primary key, nationalitet string , penge integer, campingvogn boolean, tolerance integer)
             string[] nationalitet = new string[] { "Dansker", "Svensker", "Nordmand", "Tysker", "Finner" };
             Random rd = new Random();
-            int i = rd.Next(0, 5);
-            int penge = rd.Next(500, 3000);
-            int campingvogn = rd.Next(0, 2);
-            int tolerence = rd.Next(500, 1000);
-
             for (int j = 0; j < 20; j++)
             {
-                String sql = "insert into Rejsende values(null, "+"'" + nationalitet[i]+"'" +" ," + penge + "," + campingvogn + "," + tolerence + ");";
-                SQLiteCommand command = new SQLiteCommand(sql, conn);
-                command.ExecuteNonQuery();
+                int i = rd.Next(0, 5);
+                int penge = rd.Next(500, 3000);
+                int campingvogn = rd.Next(0, 2);
+                int tolerence = rd.Next(500, 1000);
+                if (campingvogn == 0)
+                {
+                    if (tolerence <= lokalTeltPris)
+                    {
+                        String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
+                        SQLiteCommand command = new SQLiteCommand(sql, conn);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    if (tolerence <= lokalCampingvognPris)
+                    {
+                        String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
+                        SQLiteCommand command = new SQLiteCommand(sql, conn);
+                        command.ExecuteNonQuery();
+                    }
+                }
             }
 
         }
@@ -98,12 +114,38 @@ namespace CampingPlads
             String sql = "select teltPris,campingvognPris from Budget";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             SQLiteDataReader reader = command.ExecuteReader();
-           
+
             while (reader.Read())
             {
                 lokalTeltPris = Convert.ToInt32(reader["teltPris"]);
-               lokalCampingvognPris= Convert.ToInt32(reader["campingvognpris"]);
+                lokalCampingvognPris = Convert.ToInt32(reader["campingvognpris"]);
 
+
+            }
+
+        }
+        public void Indkomst()
+        {
+
+            String sql = "select campingvogn from Rejsende;";
+            SQLiteCommand command = new SQLiteCommand(sql, conn);
+            SQLiteDataReader reader = command.ExecuteReader();
+            int h= 0;
+            while (reader.Read())
+            {
+                h++;
+            }
+            sql = "select id,penge from Rejsende;";
+            command = new SQLiteCommand(sql, conn);
+            reader = command.ExecuteReader();
+            int[] besøgende = new int[h] { };
+            while (reader.Read())
+            {
+                int i;
+                int j;
+                i = Convert.ToInt32(reader["id"]);
+                j = Convert.ToInt32(reader["penge"]);
+                besøgende[i] = j;
 
             }
 
