@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
+using System.Windows.Forms;
 
 namespace CampingPlads
 {
     class Database
     {
+
+        private static Form1 myForm;
         static String connStr = "Data Source=CampingPlads.db;Version=3";
         SQLiteConnection conn = new SQLiteConnection(connStr);
         private int lokalTeltPris;
@@ -20,18 +23,25 @@ namespace CampingPlads
         private int teltPladser;
         private int campingvognsPladser;
 
-        public void Connection()
+        public Database(Form1 newform)
+        {
+            myForm = newform;
+        }
+
+        public bool Connection()
         {
             string curFile = @"CampingPlads.db";
             if (!File.Exists(curFile))
             {
 
                 SQLiteConnection.CreateFile("CampingPlads.db");
+                DelegateConsoleinfo("databse fil ikek fundet laver ny");
+                return false;
             }
-
 
             conn.Open();
 
+            return true;
 
         }
 
@@ -47,6 +57,7 @@ namespace CampingPlads
             sql = "create table Plads (id integer primary key, campingvogn boolean,rejsende integer, foreign key (rejsende) references Rejsende(id));";
             command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
+            DelegateConsoleinfo("tabeller blev lavet");
         }
 
         public void InsertCampingArea(int campingpladser)
@@ -73,6 +84,7 @@ namespace CampingPlads
                 command.ExecuteNonQuery();
 
             }
+            DelegateConsoleinfo("vi har delt de 200 pladser ud og du har nu " + rest + " campingvognspladser" + "og" + antal+"");
         }
 
 
@@ -81,6 +93,7 @@ namespace CampingPlads
             String sql = "insert into Budget values(0,0,0,0,0);";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
+            DelegateConsoleinfo("budget  værdier sat ind");
         }
         public void Rejsende()
         {
@@ -114,7 +127,7 @@ namespace CampingPlads
             }
 
             //not done!!  mangler  at de  får id ind i camping pladserne
-
+            DelegateConsoleinfo("der er rejsende men NIELS de bor ingen steder SÅ FIX DET");
         }
         public void TjekPris()
         {
@@ -176,7 +189,7 @@ namespace CampingPlads
           command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
 
-           
+            DelegateConsoleinfo("indkomst er " + totalIndkomst + ",udgifter er " + totaludgift + ",overskud for dagen er " + overskud + "");
 
         }
         public void SætPris(int teltPris, int campingvognPris)
@@ -184,30 +197,12 @@ namespace CampingPlads
             String sql = "update Budget set teltpris = " + teltPris + ", campingvognPris = " + campingvognPris + ";";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
-
+            DelegateConsoleinfo("telt pris er " + lokalTeltPris + "campingvognspris er " + lokalCampingvognPris+"");
         }
-        //public void insert()
-        //{
-
-        //    conn.Open();
-        //    String sql = "insert into ny values(null,'Kalasnikov');";
-        //    SQLiteCommand command = new SQLiteCommand(sql, conn);
-        //    command.ExecuteNonQuery();
-        //}
-        //public string select()
-        //{
-
-        //    conn.Open();
-        //    string sql = "select * from ny order by navn;";
-        //    SQLiteCommand command = new SQLiteCommand(sql, conn);
-        //    SQLiteDataReader reader = command.ExecuteReader();
-
-        //    while (reader.Read())
-        //    {
-
-        //        return (string)reader["navn"];
-        //    }
-        //    return "error";
-        //}
+       public void DelegateConsoleinfo(string info)
+        {
+            myForm.listbox1delegate(info);
+          
+        }
     }
 }

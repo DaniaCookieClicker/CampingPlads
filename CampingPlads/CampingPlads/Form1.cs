@@ -13,14 +13,19 @@ namespace CampingPlads
 {
     public partial class Form1 : Form
     {
-        Database database = new Database();
+        Database database;
         public Form1()
         {
             InitializeComponent();
 
-            database.Connection();
-             //database.CreateTable();
-              //database.Regnskab();
+         database = new Database(this);
+            
+            if (database.Connection()!=true)
+            {
+              database.CreateTable();
+              database.Regnskab();
+            }
+             
             database.TjekPris();
            
             button2.Hide();
@@ -42,12 +47,16 @@ namespace CampingPlads
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //and then stuff
+            
         }
 
-
+        public void listbox1delegate(string info)
+        {
+            listBox1.Items.Add(info);
+         
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
