@@ -19,9 +19,10 @@ namespace CampingPlads
             InitializeComponent();
 
             database.Connection();
-            // database.CreateTable();
-            //  database.Regnskab();
+             //database.CreateTable();
+              //database.Regnskab();
             database.TjekPris();
+           
             button2.Hide();
             progressBar1.Maximum = 10;
             timer1.Tick += new EventHandler(timer1_Tick);
@@ -37,7 +38,7 @@ namespace CampingPlads
         {
             listBox1.Items.Add(textBox1.Text);
 
-            //database.InsertCampingArea(Convert.ToInt32(textBox1.Text));
+            database.InsertCampingArea(Convert.ToInt32(textBox1.Text));
 
         }
 
@@ -52,6 +53,7 @@ namespace CampingPlads
         {
             database.Rejsende();
             database.Indkomst();
+            database.Opdaterbudget();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

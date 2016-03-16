@@ -14,6 +14,11 @@ namespace CampingPlads
         SQLiteConnection conn = new SQLiteConnection(connStr);
         private int lokalTeltPris;
         private int lokalCampingvognPris;
+        private int antalCampingvognsBeboere;
+        private int antalTeltBeboere;
+        private int totalIndkomst;
+        private int teltPladser;
+        private int campingvognsPladser;
 
         public void Connection()
         {
@@ -51,7 +56,9 @@ namespace CampingPlads
             int antal = 200;
 
             antal -= campingvognspladser;
+            teltPladser = antal;
             int rest = (200 - antal) / 2;
+            campingvognsPladser = rest;
             for (int i = 0; i < antal; i++)
             {
                 String sql = "insert into Plads values(null,0,null);";
@@ -88,7 +95,7 @@ namespace CampingPlads
                 int tolerence = rd.Next(500, 1000);
                 if (campingvogn == 0)
                 {
-                    if (tolerence <= lokalTeltPris)
+                    if (tolerence >= lokalTeltPris)
                     {
                         String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
@@ -97,7 +104,7 @@ namespace CampingPlads
                 }
                 else
                 {
-                    if (tolerence <= lokalCampingvognPris)
+                    if (tolerence >= lokalCampingvognPris)
                     {
                         String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
@@ -105,6 +112,8 @@ namespace CampingPlads
                     }
                 }
             }
+
+            //not done!!  mangler  at de  får id ind i camping pladserne
 
         }
         public void TjekPris()
@@ -125,26 +134,49 @@ namespace CampingPlads
         public void Indkomst()
         {
 
-            String sql = "select campingvogn from Rejsende;";
+            String sql = "select count(campingvogn) as campingvogne from rejsende  where campingvogn =1";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             SQLiteDataReader reader = command.ExecuteReader();
-            int h= 0;
+           
             while (reader.Read())
             {
-                h++;
+                antalCampingvognsBeboere = Convert.ToInt32(reader["campingvogne"]);
             }
-            sql = "select id,penge from Rejsende;";
+            sql = "select count(campingvogn) as telte from rejsende  where campingvogn =0";
             command = new SQLiteCommand(sql, conn);
             reader = command.ExecuteReader();
             while (reader.Read())
             {
-                int i;
-                int j;
-                i = Convert.ToInt32(reader["id"]);
-                j = Convert.ToInt32(reader["penge"]);
 
+                antalTeltBeboere = Convert.ToInt32(reader["telte"]);
 
             }
+             totalIndkomst = antalTeltBeboere * lokalTeltPris;
+            totalIndkomst += antalCampingvognsBeboere * lokalCampingvognPris;
+
+           
+
+        }
+        public void Opdaterbudget()
+        {
+            string sql = "select overskud from budget";
+            SQLiteCommand command = new SQLiteCommand(sql, conn);
+            SQLiteDataReader reader = command.ExecuteReader();
+            
+            int basisoverskud=0;
+            while (reader.Read())
+            {
+
+                basisoverskud = Convert.ToInt32(reader["overskud"]);
+
+            }
+            int totaludgift = campingvognsPladser * 375 + teltPladser * 150 + 2000;
+            int overskud = basisoverskud+ totalIndkomst - totaludgift;
+           sql = "update  Budget set indkomst= " + totalIndkomst + ",udgift=" + totaludgift + ",overskud=" + overskud + ";";
+          command = new SQLiteCommand(sql, conn);
+            command.ExecuteNonQuery();
+
+           
 
         }
         public void SætPris(int teltPris, int campingvognPris)
