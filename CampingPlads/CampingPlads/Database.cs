@@ -36,6 +36,7 @@ namespace CampingPlads
 
                 SQLiteConnection.CreateFile("CampingPlads.db");
                 DelegateConsoleinfo("databse fil ikek fundet laver ny");
+                conn.Open();
                 return false;
             }
 
