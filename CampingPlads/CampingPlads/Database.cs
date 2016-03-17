@@ -52,10 +52,10 @@ namespace CampingPlads
             String sql = "create table Budget (indkomst integer, udgift integer,overskud integer,teltPris integer,campingvognPris integer);";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
-            sql = "create table Rejsende (id integer primary key, nationalitet string , penge integer, campingvogn boolean,tolerance integer);";
+            sql = "create table Rejsende (id integer primary key, nationalitet string , penge integer, campingvogn boolean,tolerance integer, plads integer, foreign key (plads) references Plads(id));";
             command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
-            sql = "create table Plads (id integer primary key, campingvogn boolean,rejsende integer, foreign key (rejsende) references Rejsende(id));";
+            sql = "create table Plads (id integer primary key, campingvogn boolean, optaget boolean);";
             command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
             DelegateConsoleinfo("tabeller blev lavet");
@@ -73,14 +73,14 @@ namespace CampingPlads
             campingvognsPladser = rest;
             for (int i = 0; i < antal; i++)
             {
-                String sql = "insert into Plads values(null,0,null);";
+                String sql = "insert into Plads values(null,0,0);";
                 SQLiteCommand command = new SQLiteCommand(sql, conn);
                 command.ExecuteNonQuery();
 
             }
             for (int i = 0; i < rest; i++)
             {
-                String sql = "insert into Plads values(null,1,null);";
+                String sql = "insert into Plads values(null,1,0);";
                 SQLiteCommand command = new SQLiteCommand(sql, conn);
                 command.ExecuteNonQuery();
 
@@ -111,9 +111,28 @@ namespace CampingPlads
                 {
                     if (tolerence >= lokalTeltPris)
                     {
-                        String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
+                        String sql = "select id,optaget from Plads where optaget = 0 and campingvogn = 0";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
-                        command.ExecuteNonQuery();
+                        SQLiteDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            int optaget = Convert.ToInt32(reader["optaget"]);
+                            int id = Convert.ToInt32(reader["id"]);
+                            if(optaget == 0)
+                            {
+                                sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ", "+ id +");";
+                                command = new SQLiteCommand(sql, conn);
+                                command.ExecuteNonQuery();
+
+                                sql = "update Plads set optaget = 1 where id = "+id+";";
+                                command = new SQLiteCommand(sql, conn);
+                                command.ExecuteNonQuery();
+                                break;
+                            }
+                        }
+
+
                         sql = "select count(campingvogn) from rejsende where campingvogn =0";
                         command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
@@ -124,12 +143,26 @@ namespace CampingPlads
                 {
                     if (tolerence >= lokalCampingvognPris)
                     {
-                        String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
+                        String sql = "select id,optaget, campingvogn from Plads where optaget = 0 and campingvogn = 1";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
-                        command.ExecuteNonQuery();
-                        sql = "select count(campingvogn) from rejsende where campingvogn =1";
-                        command = new SQLiteCommand(sql, conn);
-                        command.ExecuteNonQuery();
+                        SQLiteDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            int optaget = Convert.ToInt32(reader["optaget"]);
+                            int id = Convert.ToInt32(reader["id"]);
+                            if (optaget == 0)
+                            {
+                                sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ", " + id + ");";
+                                command = new SQLiteCommand(sql, conn);
+                                command.ExecuteNonQuery();
+
+                                sql = "update Plads set optaget = 1 where id = " + id + ";";
+                                command = new SQLiteCommand(sql, conn);
+                                command.ExecuteNonQuery();
+                                break;
+                            }
+                        }
                     }
                 }
             }
