@@ -17,11 +17,11 @@ namespace CampingPlads
         SQLiteConnection conn = new SQLiteConnection(connStr);
         private int lokalTeltPris;
         private int lokalCampingvognPris;
-        private int antalCampingvognsBeboere;
-        private int antalTeltBeboere;
+        public int antalCampingvognsBeboere;
+        public int antalTeltBeboere;
         private int totalIndkomst;
-        private int teltPladser;
-        private int campingvognsPladser;
+        public int teltPladser;
+        public int campingvognsPladser;
 
         public Database(Form1 newform)
         {
@@ -166,9 +166,7 @@ namespace CampingPlads
                     }
                 }
             }
-
-            //not done!!  mangler  at de  får id ind i camping pladserne
-            DelegateConsoleinfo("der er rejsende men NIELS de bor ingen steder SÅ FIX DET");
+            
         }
         public void TjekPris()
         {
@@ -230,7 +228,7 @@ namespace CampingPlads
           command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
 
-            DelegateConsoleinfo("indkomst er " + totalIndkomst + ",udgifter er " + totaludgift + ",overskud for dagen er " + overskud + "");
+            DelegateConsoleinfo("indkomst: " + totalIndkomst + " udgift: " + totaludgift + " overskud: " + overskud + "");
 
         }
         public void SætPris(int teltPris, int campingvognPris)

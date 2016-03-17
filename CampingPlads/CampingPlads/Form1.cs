@@ -63,6 +63,12 @@ namespace CampingPlads
             database.Rejsende();
             database.Indkomst();
             database.Opdaterbudget();
+            int antalbeboere = database.antalCampingvognsBeboere;
+            int ledigepladser = database.campingvognsPladser - antalbeboere; 
+            label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
+            antalbeboere = database.antalTeltBeboere;
+            ledigepladser = database.teltPladser - antalbeboere;
+            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -104,6 +110,11 @@ namespace CampingPlads
 
 
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
