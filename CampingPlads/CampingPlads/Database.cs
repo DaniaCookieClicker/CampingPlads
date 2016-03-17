@@ -114,6 +114,10 @@ namespace CampingPlads
                         String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
+                        sql = "select count(campingvogn) from rejsende where campingvogn =0";
+                        command = new SQLiteCommand(sql, conn);
+                        command.ExecuteNonQuery();
+                        
                     }
                 }
                 else
@@ -122,6 +126,9 @@ namespace CampingPlads
                     {
                         String sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ");";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
+                        command.ExecuteNonQuery();
+                        sql = "select count(campingvogn) from rejsende where campingvogn =1";
+                        command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -198,7 +205,8 @@ namespace CampingPlads
             String sql = "update Budget set teltpris = " + teltPris + ", campingvognPris = " + campingvognPris + ";";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
-            DelegateConsoleinfo("telt pris er " + lokalTeltPris + "campingvognspris er " + lokalCampingvognPris+"");
+            TjekPris();
+            DelegateConsoleinfo("Telt pris er: " + lokalTeltPris + " Campingvognspris er: " + lokalCampingvognPris+"");
         }
        public void DelegateConsoleinfo(string info)
         {
