@@ -14,6 +14,7 @@ namespace CampingPlads
     public partial class Form1 : Form
     {
         Database database;
+        int dayCounter = 0;
         public Form1()
         {
             InitializeComponent();
@@ -60,6 +61,7 @@ namespace CampingPlads
 
         private void button2_Click(object sender, EventArgs e)
         {
+            database.rejsendeForladerCampingplads();
             database.Rejsende();
             database.Indkomst();
             database.Opdaterbudget();
@@ -69,6 +71,8 @@ namespace CampingPlads
             antalbeboere = database.antalTeltBeboere;
             ledigepladser = database.teltPladser - antalbeboere;
             label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            label3.Text = "dag: " + dayCounter + "";
+            dayCounter++;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
