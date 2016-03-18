@@ -32,7 +32,14 @@ namespace CampingPlads
                 database.CreateTable();
                 database.Regnskab();
             }
-
+            int antalbeboere = database.antalCampingvognsBeboere;
+            int ledigepladser = database.campingvognsPladser - antalbeboere;
+            label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
+            antalbeboere = database.antalTeltBeboere;
+            ledigepladser = database.teltPladser - antalbeboere;
+            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            label3.Text = "dag: " + dayCounter + "";
+            dayCounter++;
 
 
             //button2.Hide();
@@ -71,14 +78,14 @@ namespace CampingPlads
             database.Rejsende();
             database.Indkomst();
             database.Opdaterbudget();
-            int antalbeboere = database.antalCampingvognsBeboere;
-            int ledigepladser = database.campingvognsPladser - antalbeboere; 
-            label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
-            antalbeboere = database.antalTeltBeboere;
-            ledigepladser = database.teltPladser - antalbeboere;
-            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
-            label3.Text = "dag: " + dayCounter + "";
-            dayCounter++;
+            //int antalbeboere = database.antalCampingvognsBeboere;
+            //int ledigepladser = database.campingvognsPladser - antalbeboere; 
+            //label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
+            //antalbeboere = database.antalTeltBeboere;
+            //ledigepladser = database.teltPladser - antalbeboere;
+            //label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            //label3.Text = "dag: " + dayCounter + "";
+            //dayCounter++;
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
             listBox1.SelectedIndex = -1;
         }
