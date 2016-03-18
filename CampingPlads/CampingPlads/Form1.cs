@@ -26,12 +26,18 @@ namespace CampingPlads
               database.CreateTable();
               database.Regnskab();
             }
-             
-            database.TjekPris();
-           
-            button2.Hide();
-            progressBar1.Maximum = 10;
-            timer1.Tick += new EventHandler(timer1_Tick);
+           else 
+            {
+                database.dropTables();
+                database.CreateTable();
+                database.Regnskab();
+            }
+
+
+
+            //button2.Hide();
+            //progressBar1.Maximum = 10;
+            //timer1.Tick += new EventHandler(timer1_Tick);
 
         }
 
@@ -73,6 +79,8 @@ namespace CampingPlads
             label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
             label3.Text = "dag: " + dayCounter + "";
             dayCounter++;
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            listBox1.SelectedIndex = -1;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -95,25 +103,25 @@ namespace CampingPlads
 
 
 
-            if (progressBar1.Value != 10)
-            {
-                progressBar1.Value++;
-            }
-            else
-            {
-                if (progressBar1.Value == 10)
-                {
-                    timer1.Stop();
-                    progressBar1.Value = 0;
-                    progressBar1.Hide();
-                    MessageBox.Show(this, "dagen er slut, tryk på næste dag for at starte næste dag");
-                    button2.Show();
-                }
+            //if (progressBar1.Value != 10)
+            //{
+            //    progressBar1.Value++;
+            //}
+            //else
+            //{
+            //    if (progressBar1.Value == 10)
+            //    {
+            //        timer1.Stop();
+            //        progressBar1.Value = 0;
+            //        progressBar1.Hide();
+            //        MessageBox.Show(this, "dagen er slut, tryk på næste dag for at starte næste dag");
+            //        button2.Show();
+            //    }
 
 
 
 
-            }
+            //}
         }
 
         private void label1_Click(object sender, EventArgs e)

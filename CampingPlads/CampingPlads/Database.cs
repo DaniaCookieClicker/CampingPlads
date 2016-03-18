@@ -35,7 +35,7 @@ namespace CampingPlads
             {
 
                 SQLiteConnection.CreateFile("CampingPlads.db");
-                DelegateConsoleinfo("databse fil ikek fundet laver ny");
+                DelegateConsoleinfo("database fil ikke fundet laver ny");
                 conn.Open();
                 return false;
             }
@@ -133,7 +133,7 @@ namespace CampingPlads
                         }
                     }
                 }
-                else
+                else if (campingvogn == 1)
                 {
                     if (tolerence >= lokalCampingvognPris)
                     {
@@ -191,9 +191,9 @@ namespace CampingPlads
                 int plads = Convert.ToInt32(reader["plads"]);
                 if (campingvogn == 0)
                 {
-                    if (penge<lokalTeltPris)
+                    if (penge<=lokalTeltPris)
                     {
-                        sql = "update Plads set optaget = 0 where id = " + id + ";";
+                        sql = "update Plads set optaget = 0 where id = " + plads + ";";
                         command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
                         sql = "delete from rejsende where id="+id+"";
@@ -209,9 +209,9 @@ namespace CampingPlads
                 }
                 else if (campingvogn == 1)
                 {
-                    if (penge < lokalCampingvognPris)
+                    if (penge <= lokalCampingvognPris)
                     {
-                        sql = "update Plads set optaget = 0 where id = " + id + ";";
+                        sql = "update Plads set optaget = 0 where id = " + plads + ";";
                         command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
                         sql = "delete from rejsende where id=" + id + "";
@@ -288,6 +288,18 @@ namespace CampingPlads
         {
             myForm.listbox1delegate(info);
 
+        }
+        public void dropTables()
+        {
+            String sql = "drop table rejsende;";
+            SQLiteCommand command = new SQLiteCommand(sql, conn);
+            command.ExecuteNonQuery();
+            sql = "drop table budget;";
+             command = new SQLiteCommand(sql, conn);
+            command.ExecuteNonQuery();
+            sql = "drop table plads;";
+          command = new SQLiteCommand(sql, conn);
+            command.ExecuteNonQuery();
         }
     }
 }
