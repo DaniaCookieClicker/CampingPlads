@@ -24,13 +24,13 @@ namespace CampingPlads
             if (database.Connection()!=true)
             {
               database.CreateTable();
-              database.Regnskab();
+              database.BudgetManagement();
             }
            else 
             {
-                database.dropTables();
+                database.DropTables();
                 database.CreateTable();
-                database.Regnskab();
+                database.BudgetManagement();
             }
             int antalbeboere = database.antalCampingvognsBeboere;
             int ledigepladser = database.campingvognsPladser - antalbeboere;
@@ -81,10 +81,10 @@ namespace CampingPlads
 
         private void button2_Click(object sender, EventArgs e)
         {
-            database.rejsendeForladerCampingplads();
-            database.Rejsende();
-            database.Indkomst();
-            database.Opdaterbudget();
+            database.TravelersLeaving();
+            database.Travelers();
+            database.Payment();
+            database.UpdateBudget();
             int antalbeboere = database.antalCampingvognsBeboere;
             int ledigepladser = database.campingvognsPladser - antalbeboere;
             label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
@@ -108,7 +108,7 @@ namespace CampingPlads
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            database.SætPris(Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
+            database.SetPrice(Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
         }
 
 
