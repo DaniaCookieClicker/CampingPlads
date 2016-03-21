@@ -35,7 +35,7 @@ namespace CampingPlads
             {
 
                 SQLiteConnection.CreateFile("CampingPlads.db");
-                DelegateConsoleinfo("database fil ikke fundet laver ny");
+                DelegateConsoleinfo("database fil ikke fundet laver ny.");
                 conn.Open();
                 return false;
             }
@@ -58,7 +58,7 @@ namespace CampingPlads
             sql = "create table Plads (id integer primary key, campingvogn boolean, optaget boolean);";
             command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
-            DelegateConsoleinfo("tabeller blev lavet");
+            DelegateConsoleinfo("tabeller blev lavet.");
         }
 
         public void InsertCampingArea(int campingpladser)
@@ -85,7 +85,8 @@ namespace CampingPlads
                 command.ExecuteNonQuery();
 
             }
-            DelegateConsoleinfo("vi har delt de 200 pladser ud og du har nu " + rest + " campingvognspladser" + "og" + antal + "");
+            DelegateConsoleinfo("vi har delt de 200 pladser ud og du har nu ");
+            DelegateConsoleinfo(  rest + " campingvognspladser" + " og " + antal + " teltpladser.");
         }
 
 
@@ -94,19 +95,21 @@ namespace CampingPlads
             String sql = "insert into Budget values(0,0,0,0,0);";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             command.ExecuteNonQuery();
-            DelegateConsoleinfo("budget  værdier sat ind");
+            DelegateConsoleinfo("budget udgifter sat ind.");
         }
         public void Rejsende()
         {
             //(id integer primary key, nationalitet string , penge integer, campingvogn boolean, tolerance integer)
             string[] nationalitet = new string[] { "Dansker", "Svensker", "Nordmand", "Tysker", "Finner" };
             Random rd = new Random();
-            for (int j = 0; j < 20; j++)
+            int ankomende = rd.Next(20, 45);
+            int fikPlads = 0;
+            for (int j = 0; j < ankomende; j++)
             {
                 int i = rd.Next(0, 5);
-                int penge = rd.Next(500, 3000);
+                int penge = rd.Next(500, 5001);
                 int campingvogn = rd.Next(0, 2);
-                int tolerence = rd.Next(500, 1000);
+                int tolerence = rd.Next(500, 1001);
                 if (campingvogn == 0)
                 {
                     if (tolerence >= lokalTeltPris)
@@ -114,7 +117,7 @@ namespace CampingPlads
                         String sql = "select id,optaget from Plads where optaget = 0 and campingvogn = 0";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
                         SQLiteDataReader reader = command.ExecuteReader();
-
+                        fikPlads++;
                         while (reader.Read())
                         {
                             int optaget = Convert.ToInt32(reader["optaget"]);
@@ -140,7 +143,7 @@ namespace CampingPlads
                         String sql = "select id,optaget, campingvogn from Plads where optaget = 0 and campingvogn = 1";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
                         SQLiteDataReader reader = command.ExecuteReader();
-
+                        fikPlads++;
                         while (reader.Read())
                         {
                             int optaget = Convert.ToInt32(reader["optaget"]);
@@ -160,7 +163,7 @@ namespace CampingPlads
                     }
                 }
             }
-
+            DelegateConsoleinfo("Fik en plads "+fikPlads+" ud af "+ankomende+".");
         }
         public void TjekPris()
         {
@@ -180,6 +183,7 @@ namespace CampingPlads
 
         public void rejsendeForladerCampingplads()
         {
+            int forlodPladsen = 0;
             String sql = "select rejsende.id,penge,rejsende.campingvogn,plads  from rejsende left join plads where plads.id =rejsende.plads ;";
             SQLiteCommand command = new SQLiteCommand(sql, conn);
             SQLiteDataReader reader = command.ExecuteReader();
@@ -199,6 +203,7 @@ namespace CampingPlads
                         sql = "delete from rejsende where id="+id+"";
                         command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
+                        forlodPladsen++;
                     }
                     else if(penge>lokalTeltPris)
                     {
@@ -217,6 +222,7 @@ namespace CampingPlads
                         sql = "delete from rejsende where id=" + id + "";
                         command = new SQLiteCommand(sql, conn);
                         command.ExecuteNonQuery();
+                        forlodPladsen++;
                     }
                     else if (penge > lokalCampingvognPris)
                     {
@@ -227,6 +233,7 @@ namespace CampingPlads
                 }
                
             }
+            DelegateConsoleinfo(forlodPladsen+" forlod pladsen.");
         }
         public void Indkomst()
         {

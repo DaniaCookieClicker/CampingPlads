@@ -40,9 +40,9 @@ namespace CampingPlads
             label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
             label3.Text = "dag: " + dayCounter + "";
             dayCounter++;
+            HideStuff();
 
-
-            //button2.Hide();
+            
             //progressBar1.Maximum = 10;
             //timer1.Tick += new EventHandler(timer1_Tick);
 
@@ -55,9 +55,16 @@ namespace CampingPlads
 
         private void button1_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Add(textBox1.Text);
+            //listBox1.Items.Add(textBox1.Text);
 
             database.InsertCampingArea(Convert.ToInt32(textBox1.Text));
+            int antalbeboere = database.antalCampingvognsBeboere;
+            int ledigepladser = database.campingvognsPladser - antalbeboere;
+            label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
+            antalbeboere = database.antalTeltBeboere;
+            ledigepladser = database.teltPladser - antalbeboere;
+            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            ShowStuff();
 
         }
 
@@ -78,14 +85,14 @@ namespace CampingPlads
             database.Rejsende();
             database.Indkomst();
             database.Opdaterbudget();
-            //int antalbeboere = database.antalCampingvognsBeboere;
-            //int ledigepladser = database.campingvognsPladser - antalbeboere; 
-            //label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
-            //antalbeboere = database.antalTeltBeboere;
-            //ledigepladser = database.teltPladser - antalbeboere;
-            //label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
-            //label3.Text = "dag: " + dayCounter + "";
-            //dayCounter++;
+            int antalbeboere = database.antalCampingvognsBeboere;
+            int ledigepladser = database.campingvognsPladser - antalbeboere;
+            label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
+            antalbeboere = database.antalTeltBeboere;
+            ledigepladser = database.teltPladser - antalbeboere;
+            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            label3.Text = "dag: " + dayCounter + "";
+            dayCounter++;
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
             listBox1.SelectedIndex = -1;
         }
@@ -134,6 +141,36 @@ namespace CampingPlads
         private void label1_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void HideStuff()
+        {
+            label1.Hide();
+            label2.Hide();
+            label3.Hide();
+            button2.Hide();
+            button3.Hide();
+            listBox1.Hide();
+            textBox2.Hide();
+            textBox3.Hide();
+            progressBar1.Hide();
+        }
+
+        private void ShowStuff()
+        {
+            textBox1.Hide();
+            button1.Hide();
+            label4.Hide();
+
+            label1.Show();
+            label2.Show();
+            label3.Show();
+            button2.Show();
+            button3.Show();
+            listBox1.Show();
+            textBox2.Show();
+            textBox3.Show();
+            progressBar1.Show();
         }
     }
 }
