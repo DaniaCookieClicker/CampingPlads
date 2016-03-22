@@ -37,7 +37,7 @@ namespace CampingPlads
             label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
             antalbeboere = database.antalTeltBeboere;
             ledigepladser = database.teltPladser - antalbeboere;
-            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            label2.Text = "ledige teltpladser: " + ledigepladser + " ud af " + database.teltPladser;
             label3.Text = "dag: " + dayCounter + "";
             dayCounter++;
             HideStuff();
@@ -63,7 +63,7 @@ namespace CampingPlads
             label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
             antalbeboere = database.antalTeltBeboere;
             ledigepladser = database.teltPladser - antalbeboere;
-            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            label2.Text = "ledige teltpladser: " + ledigepladser + " ud af " + database.teltPladser;
             ShowStuff();
 
         }
@@ -90,7 +90,7 @@ namespace CampingPlads
             label1.Text = "ledige vognpladser: " + ledigepladser + " ud af " + database.campingvognsPladser;
             antalbeboere = database.antalTeltBeboere;
             ledigepladser = database.teltPladser - antalbeboere;
-            label2.Text = "ledige teltpladser: " + ledigepladser + "ud af " + database.teltPladser;
+            label2.Text = "ledige teltpladser: " + ledigepladser + " ud af " + database.teltPladser;
             label3.Text = "dag: " + dayCounter + "";
             dayCounter++;
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
@@ -109,6 +109,8 @@ namespace CampingPlads
         private void button3_Click(object sender, EventArgs e)
         {
             database.SetPrice(Convert.ToInt32(textBox2.Text), Convert.ToInt32(textBox3.Text));
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            listBox1.SelectedIndex = -1;
         }
 
 
@@ -153,7 +155,7 @@ namespace CampingPlads
             listBox1.Hide();
             textBox2.Hide();
             textBox3.Hide();
-            progressBar1.Hide();
+           
         }
 
         private void ShowStuff()
@@ -170,7 +172,7 @@ namespace CampingPlads
             listBox1.Show();
             textBox2.Show();
             textBox3.Show();
-            progressBar1.Show();
+           
         }
     }
 }

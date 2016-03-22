@@ -117,7 +117,6 @@ namespace CampingPlads
                         String sql = "select id,optaget from Plads where optaget = 0 and campingvogn = 0";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
                         SQLiteDataReader reader = command.ExecuteReader();
-                        fikPlads++;
                         while (reader.Read())
                         {
                             int optaget = Convert.ToInt32(reader["optaget"]);
@@ -127,6 +126,7 @@ namespace CampingPlads
                                 sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ", " + id + ");";
                                 command = new SQLiteCommand(sql, conn);
                                 command.ExecuteNonQuery();
+                        fikPlads++;
 
                                 sql = "update Plads set optaget = 1 where id = " + id + ";";
                                 command = new SQLiteCommand(sql, conn);
@@ -143,7 +143,6 @@ namespace CampingPlads
                         String sql = "select id,optaget, campingvogn from Plads where optaget = 0 and campingvogn = 1";
                         SQLiteCommand command = new SQLiteCommand(sql, conn);
                         SQLiteDataReader reader = command.ExecuteReader();
-                        fikPlads++;
                         while (reader.Read())
                         {
                             int optaget = Convert.ToInt32(reader["optaget"]);
@@ -153,6 +152,7 @@ namespace CampingPlads
                                 sql = "insert into Rejsende values(null, " + "'" + nationalitet[i] + "'" + " ," + penge + "," + campingvogn + "," + tolerence + ", " + id + ");";
                                 command = new SQLiteCommand(sql, conn);
                                 command.ExecuteNonQuery();
+                        fikPlads++;
 
                                 sql = "update Plads set optaget = 1 where id = " + id + ";";
                                 command = new SQLiteCommand(sql, conn);

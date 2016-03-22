@@ -37,7 +37,6 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
@@ -60,10 +59,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(165, 43);
+            this.button1.Location = new System.Drawing.Point(165, 42);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(157, 23);
+            this.button1.Size = new System.Drawing.Size(157, 28);
             this.button1.TabIndex = 1;
             this.button1.Text = "campingvognsPladser";
             this.button1.UseVisualStyleBackColor = true;
@@ -122,15 +121,6 @@
             this.toolTip1.SetToolTip(this.textBox3, "  hvad campingvognspladser koster i kr ");
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.progressBar1.Location = new System.Drawing.Point(856, 362);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(133, 28);
-            this.progressBar1.TabIndex = 8;
-            // 
             // timer1
             // 
             this.timer1.Enabled = true;
@@ -179,6 +169,8 @@
             this.listBox2.FormattingEnabled = true;
             this.listBox2.ItemHeight = 16;
             this.listBox2.Items.AddRange(new object[] {
+            "Udgifter per dag.",
+            "",
             "pris per campingvongs plads: \t\t375 kr",
             "pris per telt plads: \t\t\t150 kr",
             "diverse:\t\t\t\t2000 kr",
@@ -211,7 +203,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox2);
@@ -236,7 +227,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label1;
